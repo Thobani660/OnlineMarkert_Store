@@ -48,8 +48,8 @@ function ProductList() {
   };
 
   return (
-    <div style={{ padding: '2rem', backgroundColor: '#f9f9f9' }}>
-      <h2 style={{ color: '#333', textAlign: 'center', marginBottom: '2rem' }}>Product List</h2>
+    <div style={{ padding: '2rem',height:"100vh"  }}>
+      <h2 style={{ color: 'white', textAlign: 'center', marginBottom: '2rem' }}>Product List</h2>
       <div style={styles.cardContainer}>
         {products.length > 0 ? (
           products.map((product) => (
@@ -70,7 +70,7 @@ function ProductList() {
             </div>
           ))
         ) : (
-          <p style={{ textAlign: 'center', fontSize: '18px', color: '#555' }}>No products found</p>
+          <p style={{ textAlign: 'center', fontSize: '18px', color: 'Lightblue' }}>No products found</p>
         )}
       </div>
 

@@ -11,11 +11,12 @@ function Footer() {
         position: 'fixed',
         width: '100%',
         bottom: '0',
-        boxShadow: '0 -2px 8px rgba(0, 0, 0, 0.1)',
+        height: '80px',
+        boxShadow: '0 -2px 8px lightblue',
         fontSize: '0.9rem',
       }}
     >
-      <p style={{ margin: '0' }}>&copy; 2024 CodeTribe Marketplace</p>
+      <p style={{ margin: '0' }}>&copy; 2024-Thobani Zondi CodeTribe Marketplace</p>
     </footer>
   );
 }

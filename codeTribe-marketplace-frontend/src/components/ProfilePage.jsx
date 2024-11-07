@@ -13,6 +13,7 @@ import { addProduct, setProducts } from "../../src/features/productSlice";
 import ProductCard from "./ProductCard"; // ProductCard Component for displaying products
 import { getAuth } from "firebase/auth";
 
+
 function AdminProfile() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
@@ -124,8 +125,8 @@ function AdminProfile() {
         display: "flex",
         justifyContent: "space-around",
         padding: "2rem",
-        backgroundColor: "#f4f7fc",
         fontFamily: "Roboto, sans-serif",
+        height: "100vh",
       }}
     >
       {/* Left Side: Profile Information */}
@@ -133,9 +134,10 @@ function AdminProfile() {
         style={{
           width: "30%",
           padding: "2rem",
-          backgroundColor: "#ffffff",
+          backgroundColor: "transparent",
           borderRadius: "10px",
-          boxShadow: "0 6px 20px rgba(0, 0, 0, 0.1)",
+          boxShadow: "0 6px 20px blue",
+          color:'white'
         }}
       >
         <h2 style={{ color: "#4CAF50", marginBottom: "1rem" }}>User Profile</h2>
@@ -233,9 +235,12 @@ function AdminProfile() {
         style={{
           width: "30%",
           padding: "2rem",
-          backgroundColor: "#ffffff",
+          backgroundColor: "transparent",
           borderRadius: "10px",
-          boxShadow: "0 6px 20px rgba(0, 0, 0, 0.1)",
+          boxShadow: "0 6px 20px blue",
+          alignItems:"center",
+          justifyContent: "center",
+          textAlign:"center"
         }}
       >
         <h3 style={{ color: "#FF5722", marginBottom: "1rem" }}>
@@ -325,9 +330,9 @@ function AdminProfile() {
         style={{
           width: "30%",
           padding: "2rem",
-          backgroundColor: "#ffffff",
+          backgroundColor: "transparent",
           borderRadius: "10px",
-          boxShadow: "0 6px 20px rgba(0, 0, 0, 0.1)",
+          boxShadow: "0 6px 20px blue",
         }}
       >
         <h3 style={{ color: "#4CAF50", marginBottom: "1rem" }}>Products</h3>

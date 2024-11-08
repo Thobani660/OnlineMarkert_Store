@@ -1,25 +1,25 @@
 // src/redux/slices/authSlice.js
 
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../../firebase'; // Import Firebase auth object
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, auth, db, doc, setDoc, getDoc } from '../../firebase';
 
-// Initial state
 const initialState = {
   user: null,
   loading: false,
   error: null,
 };
 
-// Async thunks for registering and logging in
 export const registerUser = createAsyncThunk(
   'auth/registerUser',
-  async ({ email, password }, { rejectWithValue }) => {
+  async ({ email, password, name }, { rejectWithValue }) => {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      return userCredential.user; // Return user object
+      const user = userCredential.user;
+
+      await setDoc(doc(db, 'users', user.uid), { name, email, role: 'user' });
+      return user;
     } catch (error) {
-      return rejectWithValue(error.message); // Handle errors
+      return rejectWithValue(error.message);
     }
   }
 );
@@ -29,28 +29,25 @@ export const loginUser = createAsyncThunk(
   async ({ email, password }, { rejectWithValue }) => {
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      return userCredential.user; // Return user object
+      const user = userCredential.user;
+
+      const userDoc = await getDoc(doc(db, 'users', user.uid));
+      return { ...user, role: userDoc.exists() ? userDoc.data().role : 'user' };
     } catch (error) {
-      return rejectWithValue(error.message); // Handle errors
+      return rejectWithValue(error.message);
     }
   }
 );
 
-// authSlice definition
 const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    logout: (state) => {
-      state.user = null;
-    },
+    logout: (state) => { state.user = null; },
   },
   extraReducers: (builder) => {
-    // Handling the registerUser action
     builder
-      .addCase(registerUser.pending, (state) => {
-        state.loading = true;
-      })
+      .addCase(registerUser.pending, (state) => { state.loading = true; })
       .addCase(registerUser.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload;
@@ -60,10 +57,7 @@ const authSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
-      // Handling the loginUser action
-      .addCase(loginUser.pending, (state) => {
-        state.loading = true;
-      })
+      .addCase(loginUser.pending, (state) => { state.loading = true; })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload;
@@ -76,13 +70,6 @@ const authSlice = createSlice({
   },
 });
 
-// Export actions
 export const { logout } = authSlice.actions;
-
-// Selectors
 export const selectUser = (state) => state.auth.user;
-export const selectLoading = (state) => state.auth.loading;
-export const selectError = (state) => state.auth.error;
-
-// Export reducer
 export default authSlice.reducer;

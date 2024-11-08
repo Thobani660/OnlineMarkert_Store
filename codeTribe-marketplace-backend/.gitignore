@@ -1,0 +1,10 @@
+# Ignore environment variable files
+.env
+
+# Ignore configuration files containing keys or sensitive data
+config/*.json
+config/secrets.json
+
+# Ignore any other files you don’t want to push
+node_modules/
+*.log

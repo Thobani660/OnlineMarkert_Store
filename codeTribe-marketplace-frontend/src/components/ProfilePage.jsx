@@ -57,9 +57,10 @@ function AdminProfile() {
 
   const handleUserChange = (e) => {
     const updatedUser = { ...user, [e.target.name]: e.target.value };
-    dispatch(updateUser(updatedUser));
+    dispatch(updateUser(updatedUser)); // This will update the user in Redux
     localStorage.setItem("user", JSON.stringify(updatedUser));
   };
+  
 
   const handleSaveUser = async () => {
     if (userId) {

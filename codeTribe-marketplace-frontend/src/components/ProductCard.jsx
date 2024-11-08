@@ -1,19 +1,20 @@
 import React from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 
-const stripePromise = loadStripe('pk_test_51QB9mNFVlr9lrfFny3IGaUqxWFZalmgeV9GNYq4WNuMlugGENoOBp06IMRsHwnIaAr9BxBxHai40mM4Kuie0p96i00EcHan4cV'); // Replace with your public key
+const stripePromise = loadStripe('pk_test_51QB9mNFVlr9lrfFny3IGaUqxWFZalmgeV9GNYq4WNuMlugGENoOBp06IMRsHwnIaAr9BxBxHai40mM4Kuie0p96i00EcHan4cV'); // Replace with your Stripe public key
 
 const ProductCard = ({ product }) => {
   const handleBuyNow = async () => {
     try {
-      // Call your backend to create a Stripe Checkout session
       const response = await fetch('/api/create-checkout-session', {
         method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name: product.name, price: product.price }),
       });
 
       const session = await response.json();
-
-      // Redirect to Stripe Checkout
       const stripe = await stripePromise;
       const { error } = await stripe.redirectToCheckout({
         sessionId: session.id,
@@ -49,6 +50,7 @@ const styles = {
     textAlign: 'center',
     width: '200px',
     margin: '1rem',
+    color: 'lightgreen'
   },
   image: {
     width: '100%',

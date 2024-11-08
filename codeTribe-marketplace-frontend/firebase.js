@@ -1,19 +1,23 @@
-// src/firebase.js
-
 import { initializeApp } from 'firebase/app';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { getFirestore, doc, setDoc, getDoc } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 import { getAnalytics } from 'firebase/analytics';
+import dotenv from 'dotenv';
+
+// Load environment variables from .env file
+dotenv.config();
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyDKfDt2pW-d0kYgkxFEYdyxcO8IWfi0xHs',
-  authDomain: 'marketplace-84441.firebaseapp.com',
-  projectId: 'marketplace-84441',
-  storageBucket: 'marketplace-84441.firebasestorage.app',
-  messagingSenderId: '516512100076',
-  appId: '1:516512100076:web:68e5dcfb804deef89b3fc9',
-  measurementId: 'G-TEJM1ZKV7D',
+  apiKey: process.env.FIREBASE_API_KEY,
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.FIREBASE_PROJECT_ID,
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.FIREBASE_APP_ID,
+  measurementId: process.env.FIREBASE_MEASUREMENT_ID,
+  privateKey: process.env.FIREBASE_PRIVATE_KEY, // You can use it if needed
+  clientEmail: process.env.FIREBASE_CLIENT_EMAIL, // If needed
 };
 
 const app = initializeApp(firebaseConfig);
